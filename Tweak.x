@@ -119,7 +119,7 @@
     // Loop through the dictionary
     for (NSString *key in filters) {
         BOOL isEnabled = [filters[key] boolValue];
-        if (isEnabled && [description isEqualToString:key]) {
+        if (isEnabled && [description containsString:key]) {
             // Special exception for Shorts
             if ([key containsString:@"shorts"] && [description containsString:@"history*"]) {
                 return %orig;
