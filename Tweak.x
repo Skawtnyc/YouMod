@@ -104,6 +104,7 @@
 }
 %end
 
+/*
 %hook YTIElementRenderer
 - (NSData *)elementData {
     NSString *description = [self description];
@@ -132,6 +133,7 @@
     return %orig;
 }
 %end
+*/
 
 %hook YTSearchViewController
 - (void)viewDidLoad {
@@ -649,7 +651,7 @@ BOOL isTabSelected = NO;
 %end
 */
 
-
+/*
 // Thanks to aricloverEXTRA for all of these logics!
 // YTHidePlayerButtons 1.0.0 - made by @aricloverEXTRA
 static NSDictionary<NSString *, NSString *> *HideToggleMap(void) {
@@ -836,4 +838,77 @@ static void hideButtonsInActionBarIfNeeded(id collectionView) {
         }
     });
 }
+%end
+*/
+
+// 1. Updated String Matcher for Shelves
+NSString *getShelfIdentifier(NSString *description) {
+    if (!description) return nil;
+
+    // Horizonal & Nudges
+    if (IS_ENABLED(HideHoriShelf) && [description containsString:@"horizontal-video-shelf"]) return @"horizontal-video-shelf";
+    if (IS_ENABLED(HideGenMusicShelf) && [description containsString:@"feed_nudge"]) return @"feed_nudge";
+
+    // Shorts
+    if (IS_ENABLED(HideShortsShelf)) {
+        for (NSString *str in @[@"shorts_shelf", @"shorts_video_cell", @"6Shorts"]) {
+            if ([description containsString:str] && ![description containsString:@"history*"]) return str;
+        }
+    }
+
+    return nil;
+}
+
+// 2. The Filter Logic
+static NSMutableArray *filterShelfSections(NSArray *array) {
+    NSMutableArray *newArray = [array mutableCopy];
+    
+    NSIndexSet *removeIndexes = [newArray indexesOfObjectsPassingTest:^BOOL(id section, NSUInteger idx, BOOL *stop) {
+        
+        // Target: YTIShelfRenderer (The "Watch it again" box)
+        if ([section isKindOfClass:%c(YTIShelfRenderer)]) {
+            NSString *desc = [section description];
+            if (getShelfIdentifier(desc)) {
+                HBLogDebug(@"[YouMod] Removing Shelf: %@", getShelfIdentifier(desc));
+                return YES; // Kill the whole shelf
+            }
+        }
+
+        // Target: YTIItemSectionRenderer (Individual elements in the main feed)
+        if ([section isKindOfClass:%c(YTIItemSectionRenderer)]) {
+            // Check the internal contents (e.g. Mixes or Shorts items)
+            NSArray *contents = [section contentsArray];
+            id firstItem = [contents firstObject];
+            YTIElementRenderer *element = [firstItem respondsToSelector:@selector(elementRenderer)] ? [firstItem elementRenderer] : nil;
+            
+            if (getShelfIdentifier([element description])) {
+                HBLogDebug(@"[YouMod] Removing Section Element: %@", getShelfIdentifier([element description]));
+                return YES;
+            }
+        }
+
+        return NO;
+    }];
+
+    [newArray removeObjectsAtIndexes:removeIndexes];
+    return newArray;
+}
+
+// 3. The Hook
+%hook YTInnerTubeCollectionViewController
+
+- (void)displaySectionsWithReloadingSectionControllerByRenderer:(id)renderer {
+    // This handles the initial load
+    NSMutableArray *sectionRenderers = [self valueForKey:@"_sectionRenderers"];
+    if (sectionRenderers) {
+        [self setValue:filterShelfSections(sectionRenderers) forKey:@"_sectionRenderers"];
+    }
+    %orig;
+}
+
+- (void)addSectionsFromArray:(NSArray *)array {
+    // This handles the "Infinite Scroll" as you go down the feed
+    %orig(filterShelfSections(array));
+}
+
 %end
