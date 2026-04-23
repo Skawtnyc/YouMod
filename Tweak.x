@@ -121,6 +121,19 @@
 %end
 
 // I ran out of ideas
+// If shorts button is rendered by YTQTMButton, can we filter the button here?
+%hook QTMButton
+
+- (void)layoutSubviews {
+    %orig;
+    if ([self.accessibilityIdentifier isEqualToString:@"id.reel_remix_button"]) {
+		[self removeFromSuperview];
+        self.hidden = YES;
+    }
+}
+
+%end
+
 %hook _ASDisplayView
 
 - (void)didMoveToWindow {
