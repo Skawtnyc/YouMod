@@ -31,7 +31,6 @@
 #define HideSearch @"YouModHideSearchButton"
 #define HideVoiceSearch @"YouModHideVoiceSearchButton"
 #define HideCastButtonNav @"YouModHideCastButtonNavigationBar"
-#define HideMixPlayLists @"YouModHideMixPlayLists"
 #define HideHoriShelf @"YouModHideHoriShelf"
 #define HideGenMusicShelf @"YouModHideGenMusicShelf"
 #define HideShortsShelf @"YouModHideShortsShelf"
