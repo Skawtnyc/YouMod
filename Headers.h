@@ -44,8 +44,7 @@
 #define HideVoiceSearch @"YouModHideVoiceSearchButton"
 #define HideCastButtonNav @"YouModHideCastButtonNavigationBar"
 // Feed
-#define RemoveVideoAds @"YouModRemoveVideoAds"
-#define HideYouTubePremium @"YouModHideYouTubePremiumPromotions"
+#define RemoveAds @"YouModRemoveAdsAndPromotions"
 #define HideSubbar @"YouModHideSubbar"
 #define HideGenMusicShelf @"YouModHideGenMusicShelf"
 #define HideShortsShelf @"YouModHideShortsShelf"

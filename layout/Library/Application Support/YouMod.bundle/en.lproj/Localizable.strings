@@ -21,9 +21,7 @@
 
 "FEED" = "Feed";
 "REMOVE_ADS" = "Remove video ads";
-"REMOVE_ADS_DESC" = "Removes advertisements from videos to prevents interruptions.";
-"HIDE_YOUTUBE_PREMIUM" = "Hide YouTube Premium promotions";
-"HIDE_YOUTUBE_PREMIUM_DESC" = "Hide YouTube Premium popups, banners, and upgrade dialogs.";
+"REMOVE_ADS_DESC" = "Remove video advertisements and YouTube Premium promotions from videos and feed.";
 "HIDE_SUBBAR" = "Hide subbar";
 "HIDE_SUBBAR_DESC" = "Hide subbar at the top of the feed.";
 "HIDE_MUSIC_PLAYLISTS" = "Hide music playlist generator";

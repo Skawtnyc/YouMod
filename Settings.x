@@ -256,29 +256,17 @@ NSBundle *YouModBundle() {
         }];
     [sectionItems addObject:feed];
 
-    // Remove video ads
+    // Remove ads
     YTSettingsSectionItem *removeads = [YTSettingsSectionItemClass switchItemWithTitle:LOC(@"REMOVE_ADS")
         titleDescription:LOC(@"REMOVE_ADS_DESC")
         accessibilityIdentifier:nil
-        switchOn:IS_ENABLED(RemoveVideoAds)
+        switchOn:IS_ENABLED(RemoveAds)
         switchBlock:^BOOL (YTSettingsCell *cell, BOOL enabled) {
-            [[NSUserDefaults standardUserDefaults] setBool:enabled forKey:RemoveVideoAds];
+            [[NSUserDefaults standardUserDefaults] setBool:enabled forKey:RemoveAds];
             return YES;
         }
         settingItemId:0];
     [sectionItems addObject:removeads];
-
-    // Hide YouTube Premium promotions
-    YTSettingsSectionItem *hideytppromo = [YTSettingsSectionItemClass switchItemWithTitle:LOC(@"HIDE_YOUTUBE_PREMIUM")
-        titleDescription:LOC(@"HIDE_YOUTUBE_PREMIUM_DESC")
-        accessibilityIdentifier:nil
-        switchOn:IS_ENABLED(HideYouTubePremium)
-        switchBlock:^BOOL (YTSettingsCell *cell, BOOL enabled) {
-            [[NSUserDefaults standardUserDefaults] setBool:enabled forKey:HideYouTubePremium];
-            return YES;
-        }
-        settingItemId:0];
-    [sectionItems addObject:hideytppromo];
 
     // Hide Subbar
     YTSettingsSectionItem *hidesubbar = [YTSettingsSectionItemClass switchItemWithTitle:LOC(@"HIDE_SUBBAR")

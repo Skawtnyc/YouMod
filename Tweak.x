@@ -186,7 +186,7 @@ static NSMutableArray <YTIItemSectionRenderer *> *filteredArray(NSArray <YTIItem
 }
 %end
 
-%group VideoAds
+%group Ads
 %hook YTPlayerResponse
 %new(@@:)
 - (NSMutableArray *)playerAdsArray { return [NSMutableArray array]; }
@@ -298,9 +298,7 @@ static NSMutableArray <YTIItemSectionRenderer *> *filteredArray(NSArray <YTIItem
     %orig(filteredArray(array));
 }
 %end
-%end
 
-%group Premium
 %hook YTColdConfig
 - (BOOL)cxClientDisableMementoPromotions { return YES; }
 %end
@@ -1143,11 +1141,8 @@ BOOL isTabSelected = NO;
     YTIDislikeResponseClass = %c(YTIDislikeResponse);
     YTIRemoveLikeResponseClass = %c(YTIRemoveLikeResponse);
     %init;
-    if (IS_ENABLED(RemoveVideoAds)) {
-        %init(VideoAds);
-    }
-    if (IS_ENABLED(HideYouTubePremium)) {
-        %init(Premium);
+    if (IS_ENABLED(RemoveAds)) {
+        %init(Ads);
     }
     if (IS_ENABLED(AllowsBackgroundPlayback)) {
         %init(BackgroundPlayback);
