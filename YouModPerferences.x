@@ -2,7 +2,7 @@
 
 #define Prefix @"YouMod"
 
-NSBundle *YouModBundle() {
+static NSBundle *YouModBundle() {
     static NSBundle *bundle = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
