@@ -452,9 +452,6 @@
 %end
 
 %ctor {
-    YTILikeResponseClass = %c(YTILikeResponse);
-    YTIDislikeResponseClass = %c(YTIDislikeResponse);
-    YTIRemoveLikeResponseClass = %c(YTIRemoveLikeResponse);
     %init;
     if (IS_ENABLED(OldQualityPicker)) {
         %init(OldVideoQuality);
