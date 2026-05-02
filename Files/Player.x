@@ -620,7 +620,7 @@ static void YouModAddEndTime(YTPlayerViewController *self, YTSingleVideoControll
     if (IS_ENABLED(OldQualityPicker)) {
         %init(OldVideoQuality);
     }
-    if (IS_ENABLED(ExtraSpeed)) {
+    if (IS_ENABLED(ExtraSpeed) || IS_ENABLED(GestureControls)) {
         %init(Speed);
     }
     if (IS_ENABLED(HidePaidPromoOverlay)) {
